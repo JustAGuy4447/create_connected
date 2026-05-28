@@ -5,6 +5,7 @@
 		"0": "create:block/funnel/brass_funnel_frame",
 		"1": "create_connected:block/fan_catalyst_core",
 		"2": "minecraft:block/budding_amethyst",
+		"particle": "create:block/funnel/brass_funnel_frame",
 		"fire": "minecraft:block/amethyst_cluster"
 	},
 	"elements": [
