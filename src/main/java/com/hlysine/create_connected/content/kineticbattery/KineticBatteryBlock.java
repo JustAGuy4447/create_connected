@@ -3,6 +3,7 @@ package com.hlysine.create_connected.content.kineticbattery;
 
 import com.hlysine.create_connected.registries.CCBlockEntityTypes;
 import com.hlysine.create_connected.registries.CCBlocks;
+import com.hlysine.create_connected.registries.CCDataComponents;
 import com.hlysine.create_connected.registries.CCItems;
 import com.simibubi.create.content.kinetics.base.DirectionalKineticBlock;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
@@ -30,6 +31,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import org.jetbrains.annotations.NotNull;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class KineticBatteryBlock extends DirectionalKineticBlock implements IBE<KineticBatteryBlockEntity> {
 
@@ -180,6 +184,12 @@ public class KineticBatteryBlock extends DirectionalKineticBlock implements IBE<
     public @NotNull ItemStack getCloneItemStack(BlockState state, @NotNull HitResult target, @NotNull LevelReader level, @NotNull BlockPos pos, @NotNull Player player) {
         if (state.getValue(LEVEL) == 5) {
             return CCItems.CHARGED_KINETIC_BATTERY.asStack();
+        }
+        if (level.getBlockEntity(pos) instanceof KineticBatteryBlockEntity batteryBE) {
+            BigDecimal roundedBL = new BigDecimal(batteryBE.getBatteryLevel() / 3600 / 20).setScale(2, RoundingMode.HALF_UP);
+            ItemStack stack =  super.getCloneItemStack(state, target, level, pos, player);
+            stack.set(CCDataComponents.BATTERY_LEVEL, roundedBL.doubleValue());
+            return stack;
         }
         return super.getCloneItemStack(state, target, level, pos, player);
     }

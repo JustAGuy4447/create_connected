@@ -3,6 +3,7 @@ package com.hlysine.create_connected.content.kineticbattery;
 
 import com.hlysine.create_connected.registries.CCBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -19,6 +20,21 @@ public class ChargedKineticBatteryItem extends BlockItem {
 
     public ChargedKineticBatteryItem(Properties builder) {
         super(CCBlocks.KINETIC_BATTERY.get(), builder);
+    }
+
+    @Override
+    public boolean isBarVisible(@NotNull ItemStack stack) {
+        return true;
+    }
+
+    @Override
+    public int getBarWidth(@NotNull ItemStack stack) {
+        return 13;
+    }
+
+    @Override
+    public int getBarColor(@NotNull ItemStack stack) {
+        return Mth.hsvToRgb(1.0F / 3.0F, 1.0F, 1.0F);
     }
 
     @Override

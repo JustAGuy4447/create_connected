@@ -54,6 +54,7 @@ import com.hlysine.create_connected.content.itemsilo.ItemSiloCTBehaviour;
 import com.hlysine.create_connected.content.itemsilo.ItemSiloItem;
 import com.hlysine.create_connected.content.kineticbattery.KineticBatteryBlock;
 import com.hlysine.create_connected.content.kineticbattery.KineticBatteryGenerator;
+import com.hlysine.create_connected.content.kineticbattery.KineticBatteryItem;
 import com.hlysine.create_connected.content.kineticbridge.KineticBridgeBlock;
 import com.hlysine.create_connected.content.kineticbridge.KineticBridgeBlockItem;
 import com.hlysine.create_connected.content.kineticbridge.KineticBridgeDestinationBlock;
@@ -106,6 +107,8 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
+import net.minecraft.world.level.storage.loot.functions.SetComponentsFunction;
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
@@ -421,10 +424,13 @@ public class CCBlocks {
                                         .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(KineticBatteryBlock.LEVEL, 5))
                                         .invert())
                                 .add(LootItem.lootTableItem(block))
+                                        .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY)
+                                                .include(CCDataComponents.BATTERY_LEVEL))
                 );
                 lt.add(block, builder);
             })
-            .item()
+            .item(KineticBatteryItem::new)
+            .properties(p -> p.component(CCDataComponents.BATTERY_LEVEL, 0.0))
             .transform(customItemModel())
             .register();
 

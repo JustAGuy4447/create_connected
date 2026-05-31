@@ -46,6 +46,15 @@
           "name": "create_connected:kinetic_battery"
         }
       ],
+      "functions": [
+        {
+          "function": "minecraft:copy_components",
+          "include": [
+            "create_connected:battery_level"
+          ],
+          "source": "block_entity"
+        }
+      ],
       "rolls": 1.0
     }
   ],
