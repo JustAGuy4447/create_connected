@@ -178,6 +178,8 @@
   "create_connected.battery.status.empty": "Empty",
   "create_connected.battery.status.full": "Full",
   "create_connected.battery.status.power_saving": "Discharging (power saving)",
+  "create_connected.battery.tooltip.charge": "Charge:",
+  "create_connected.battery.tooltip.notice": "Value gets rounded when obtaining\nthe Battery as an item and may vary\ndepending on the decimal places.",
   "create_connected.centrifugal_clutch.max_speed": "Maximum Speed",
   "create_connected.centrifugal_clutch.min_speed": "Minimum Speed",
   "create_connected.centrifugal_clutch.speed_threshold": "Speed Threshold",

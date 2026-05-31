@@ -5,6 +5,7 @@ import com.hlysine.create_connected.config.CServer;
 import com.hlysine.create_connected.content.ISplitShaftBlockEntity;
 import com.hlysine.create_connected.datagen.advancements.AdvancementBehaviour;
 import com.hlysine.create_connected.datagen.advancements.CCAdvancements;
+import com.hlysine.create_connected.registries.CCDataComponents;
 import com.simibubi.create.content.contraptions.bearing.WindmillBearingBlockEntity;
 import com.simibubi.create.content.kinetics.base.GeneratingKineticBlockEntity;
 import com.simibubi.create.content.redstone.thresholdSwitch.ThresholdSwitchObservable;
@@ -15,6 +16,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -22,6 +24,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Math;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 import static com.hlysine.create_connected.content.kineticbattery.KineticBatteryBlock.*;
@@ -228,6 +232,12 @@ public class KineticBatteryBlockEntity extends GeneratingKineticBlockEntity impl
         super.addToGoggleTooltip(tooltip, isPlayerSneaking);
 
         return true;
+    }
+
+    @Override
+    protected void collectImplicitComponents(DataComponentMap.Builder components) {
+        BigDecimal roundedBL = new BigDecimal(batteryLevel / 3600 / 20).setScale(2, RoundingMode.HALF_UP);
+        components.set(CCDataComponents.BATTERY_LEVEL, roundedBL.doubleValue());
     }
 
     public MutableComponent getBatteryStatusTextComponent() {
