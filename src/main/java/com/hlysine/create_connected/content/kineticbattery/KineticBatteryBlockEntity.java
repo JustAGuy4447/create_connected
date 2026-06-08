@@ -24,8 +24,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Math;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 
 import static com.hlysine.create_connected.content.kineticbattery.KineticBatteryBlock.*;
@@ -236,8 +234,7 @@ public class KineticBatteryBlockEntity extends GeneratingKineticBlockEntity impl
 
     @Override
     protected void collectImplicitComponents(DataComponentMap.Builder components) {
-        BigDecimal roundedBL = new BigDecimal(batteryLevel / 3600 / 20).setScale(2, RoundingMode.HALF_UP);
-        components.set(CCDataComponents.BATTERY_LEVEL, roundedBL.doubleValue());
+        components.set(CCDataComponents.BATTERY_LEVEL, batteryLevel / 3600 / 20);
     }
 
     public MutableComponent getBatteryStatusTextComponent() {

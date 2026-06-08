@@ -23,21 +23,6 @@ public class ChargedKineticBatteryItem extends BlockItem {
     }
 
     @Override
-    public boolean isBarVisible(@NotNull ItemStack stack) {
-        return true;
-    }
-
-    @Override
-    public int getBarWidth(@NotNull ItemStack stack) {
-        return 13;
-    }
-
-    @Override
-    public int getBarColor(@NotNull ItemStack stack) {
-        return Mth.hsvToRgb(1.0F / 3.0F, 1.0F, 1.0F);
-    }
-
-    @Override
     public @NotNull String getDescriptionId() {
         return "item.create_connected.charged_kinetic_battery";
     }

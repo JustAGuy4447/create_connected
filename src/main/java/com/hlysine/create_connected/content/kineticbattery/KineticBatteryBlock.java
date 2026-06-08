@@ -32,9 +32,6 @@ import net.minecraft.world.phys.HitResult;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import org.jetbrains.annotations.NotNull;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 public class KineticBatteryBlock extends DirectionalKineticBlock implements IBE<KineticBatteryBlockEntity> {
 
     public static final IntegerProperty LEVEL = IntegerProperty.create("level", 0, 5);
@@ -186,9 +183,8 @@ public class KineticBatteryBlock extends DirectionalKineticBlock implements IBE<
             return CCItems.CHARGED_KINETIC_BATTERY.asStack();
         }
         if (level.getBlockEntity(pos) instanceof KineticBatteryBlockEntity batteryBE) {
-            BigDecimal roundedBL = new BigDecimal(batteryBE.getBatteryLevel() / 3600 / 20).setScale(2, RoundingMode.HALF_UP);
             ItemStack stack =  super.getCloneItemStack(state, target, level, pos, player);
-            stack.set(CCDataComponents.BATTERY_LEVEL, roundedBL.doubleValue());
+            stack.set(CCDataComponents.BATTERY_LEVEL, batteryBE.getBatteryLevel() / 3600 / 20);
             return stack;
         }
         return super.getCloneItemStack(state, target, level, pos, player);

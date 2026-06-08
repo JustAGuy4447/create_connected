@@ -3,7 +3,6 @@ package com.hlysine.create_connected.content.kineticbattery;
 
 import com.hlysine.create_connected.ConnectedLang;
 import com.hlysine.create_connected.registries.CCDataComponents;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -33,20 +32,20 @@ public class KineticBatteryItem extends BlockItem {
     @Override
     public int getBarWidth(@NotNull ItemStack stack) {
         float maxBatteryLevel = (float)KineticBatteryBlockEntity.getMaxBatteryLevel() / 3600 / 20;
-        return Math.round(13.0F * ((float)getBatteryLevel(stack) / maxBatteryLevel));
+        return Math.round(13.0F * Mth.clamp((float)getBatteryLevel(stack) / maxBatteryLevel, 0, 1));
     }
 
     @Override
     public int getBarColor(@NotNull ItemStack stack) {
         float maxBatteryLevel = (float)KineticBatteryBlockEntity.getMaxBatteryLevel() / 3600 / 20;
-        float f = Math.max(0.0F, (float) getBatteryLevel(stack) / maxBatteryLevel);
+        float f = Math.max(0.0F, Mth.clamp((float) getBatteryLevel(stack) / maxBatteryLevel, 0, 1));
         return Mth.hsvToRgb(f / 3.0F, 1.0F, 1.0F);
     }
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
-        if(tooltipFlag.isAdvanced()) {
+        //if(tooltipFlag.isAdvanced()) {
             tooltipComponents.add(Component.empty());
             ConnectedLang.translate("battery.tooltip.charge")
                             .add(Component.literal(" "))
@@ -56,10 +55,7 @@ public class KineticBatteryItem extends BlockItem {
                                     .add(Component.literal(" "))
                                     .add(ConnectedLang.translate("generic.unit.su_hours")))
                     .addTo(tooltipComponents);
-            ConnectedLang.translate("battery.tooltip.notice")
-                    .style(ChatFormatting.GRAY)
-                    .addTo(tooltipComponents);
-        }
+        //}
     }
 
     @Override
@@ -68,7 +64,7 @@ public class KineticBatteryItem extends BlockItem {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         if (!(blockEntity instanceof KineticBatteryBlockEntity batteryBE))
             return ret;
-        batteryBE.setBatteryLevel(stack.getOrDefault(CCDataComponents.BATTERY_LEVEL, 0.0) * 3600 * 20);
+        batteryBE.setBatteryLevel(getBatteryLevel(stack) * 3600 * 20);
         return true;
     }
 
