@@ -3,7 +3,6 @@ package com.hlysine.create_connected.content.kineticbattery;
 
 import com.hlysine.create_connected.registries.CCBlocks;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
